@@ -1,59 +1,43 @@
-var canvas;
-var block1,block2,block3,block4;
-var ball, edges;
-var music;
+const Engine = Matter.Engine;
+const World= Matter.World;
+const Bodies = Matter.Bodies;
 
-function preload(){
-    music = loadSound("music.mp3");
-}
+var engine, world;
+var hammer;
+var rubberBall1, rubberBall1, rubberBall3;
+var ironHide;
+var stoneBlock;
 
 
 function setup(){
-    canvas = createCanvas(800,600);
+    var canvas = createCanvas(1200,600);
+    engine = Engine.create();
+    world = engine.world;
 
-    block1 = createSprite(0,580,360,30);
-    block1.shapeColor = rgb(0,0,255);
+    plane = new Plane(600,height,1200,20);
+    hammer = new Hammer(10,100);
+  rubberBall1= new Rubber(300,300,10);
+  ironHide= new Iron(200,200,40,50);
+  stoneBlock= new Stone(40,40,50,100);
 
-    block2 = createSprite(295,580,200,30);
-    block2.shapeColor = rgb(255,128,0);
+  
 
-    block3 = createSprite(515,580,200,30);
-    block3.shapeColor = rgb(153,0,76);
-
-    block4 = createSprite(740,580,220,30);
-    block4.shapeColor = rgb(0,100,0);
-
-    ball = createSprite(random(20,750),100, 40,40);
-    ball.shapeColor = rgb(255,255,255);
-    ball.velocityX = 4;
-    ball.velocityY = 9;
 
 }
 
-function draw() {
-    background(rgb(169,169,169));
-    edges=createEdgeSprites();
-    ball.bounceOff(edges);
+function draw(){
+    background("lightBlue");
+    Engine.update(engine);
 
-    if(block1.isTouching(ball) && ball.bounceOff(block1)){
-        ball.shapeColor = rgb(0,0,255);
-        music.play();
-    }
 
-    if(block2.isTouching(ball)){
-        ball.shapeColor = rgb(255,128,0);
-        ball.velocityX = 0;
-        ball.velocityY = 0;
-        music.stop();
-    }
+    plane.display();
+    hammer.display();
+    rubberBall1.display1();
+    ironHide.display3();
+    stoneBlock.display2();
 
-    if(block3.isTouching(ball) && ball.bounceOff(block3)){
-        ball.shapeColor = rgb(153,0,76);
-    }
+    
 
-    if(block4.isTouching(ball) && ball.bounceOff(block4)){
-        ball.shapeColor = rgb(0,100,0);
-    }
-
-    drawSprites();
+    
+ 
 }
